@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Explore() {
+export default function Library() {
   return (
     <View style={styles.container}>
-      <Text>Explore page</Text>
+      <Text>Library page</Text>
     </View>
   );
 }

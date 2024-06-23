@@ -1,70 +1,106 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import ARiquezaDasNacoes from "@/assets/images/a-riqueza-das-nacoes.jpg";
+import DomCasmurro from "@/assets/images/dom-casmurro.jpg";
+import DomQuixote from "@/assets/images/dom-quixote.jpg";
+import Dracula from "@/assets/images/dracula.jpg";
+import OPrincipe from "@/assets/images/o-principe.jpg";
+import OsMiseraveis from "@/assets/images/os-miseraveis.jpg";
+import OsSertoes from "@/assets/images/os-sertoes.jpg";
+import Senhora from "@/assets/images/senhora.jpg";
+import UserIcon from "@/assets/images/user.jpeg";
+import Book from "@/components/Book";
+import Text from "@/components/Text";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
+export default function Index() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text weight="bold" style={styles.text}>
+            Olá, Daniela!
+          </Text>
+          <Image source={UserIcon} style={{ width: 36, height: 36, borderRadius: 90 }} />
+        </View>
+
+        <View style={styles.collection}>
+          <Text>Continue de onde parou</Text>
+          <View style={styles.books}>
+            <Book title="Dom Quixote" author="Miguel de Servantes" duration="5h48min" pages={321} cover={DomQuixote} />
+          </View>
+        </View>
+
+        <View style={styles.collection}>
+          <View style={styles.collectionHeader}>
+            <Text>Histórias que você vai amar</Text>
+            <Text weight="light" style={{ fontSize: 12 }}>
+              Ver todos
+            </Text>
+          </View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.books}>
+            <Book title="Dom Casmurro" author="Machado de Assis" duration="7h20min" pages={513} cover={DomCasmurro} />
+            <Book title="Drácula" author="Bram Stoker" duration="6h35min" pages={420} cover={Dracula} />
+            <Book title="Os Sertões" author="Euclides da Cunha" duration="5h21min" pages={368} cover={OsSertoes} />
+          </ScrollView>
+        </View>
+
+        <View style={styles.collection}>
+          <Text>Negócios</Text>
+          <View style={styles.books}>
+            <Book
+              title="A Riqueza das Nações"
+              author="Adam Smith"
+              duration="5h48min"
+              pages={360}
+              cover={ARiquezaDasNacoes}
+            />
+            <Book title="O Príncipe" author="Nicolau Maquiavel" duration="7h20min" pages={512} cover={OPrincipe} />
+          </View>
+        </View>
+
+        <View style={styles.collection}>
+          <Text>Romances</Text>
+          <View style={styles.books}>
+            <Book title="Os Miseráveis" author="Victor Hugo" duration="5h48min" pages={300} cover={OsMiseraveis} />
+            <Book title="Senhora" author="José de Alencar" duration="3h32min" pages={240} cover={Senhora} />
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  scrollView: {
+    paddingHorizontal: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    paddingVertical: 20,
+    justifyContent: "space-between",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  collection: {
+    marginBottom: 14,
+  },
+
+  collectionHeader: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  books: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 20,
+    marginTop: 8,
+  },
+
+  text: {
+    fontSize: 20,
   },
 });
