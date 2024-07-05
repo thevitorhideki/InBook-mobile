@@ -1,9 +1,14 @@
+import { Link, useLocalSearchParams } from 'expo-router';
+
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Explore() {
+export default function Page() {
+  const { slug } = useLocalSearchParams();
+
   return (
     <View style={styles.container}>
-      <Text>Explore page</Text>
+      <Link href="/">Voltar</Link>
+      <Text>Livro: {slug}</Text>
     </View>
   );
 }
