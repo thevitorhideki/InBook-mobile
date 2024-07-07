@@ -21,7 +21,7 @@ export default function Index() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text weight="bold" style={styles.text}>
+          <Text weight="bold" fontSize={20}>
             Olá, Daniela!
           </Text>
           <Link href="/auth">
@@ -103,7 +103,7 @@ export default function Index() {
           </View>
         </View>
 
-        <View style={styles.collection}>
+        <View style={[styles.collection, styles.lastItem]}>
           <Text>Romances</Text>
           <View style={styles.books}>
             <Book
@@ -132,6 +132,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  lastItem: {
+    marginBottom: 82,
+  },
+
   header: {
     display: 'flex',
     flexDirection: 'row',
@@ -155,9 +159,5 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 20,
     marginTop: 8,
-  },
-
-  text: {
-    fontSize: 20,
   },
 });

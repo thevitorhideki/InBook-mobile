@@ -1,13 +1,15 @@
+import { useThemeColor } from '@/hooks/useThemeColor';
 import { Link } from 'expo-router';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, View } from 'react-native';
 import Text from './Text';
+import VerticalLine from './VerticalLine';
 
 type BookProps = {
   title: string;
   author: string;
   duration: string;
   pages: number;
-  cover: any;
+  cover: ImageSourcePropType;
 };
 
 export default function Book({
@@ -17,19 +19,38 @@ export default function Book({
   pages,
   cover,
 }: BookProps) {
+  const themeBackgroundStyle = useThemeColor({}, 'card');
+
   return (
-    <Link href={{ pathname: '/books/[slug]', params: { slug: title } }}>
-      <View style={styles.container}>
+    <Link
+      href={{
+        pathname: '/books/[slug]',
+        params: {
+          slug: title,
+          cover: cover,
+          author: author,
+          duration: duration,
+          pages: pages,
+        },
+      }}
+    >
+      <View
+        style={[styles.container, { backgroundColor: themeBackgroundStyle }]}
+      >
         <Image source={cover} style={styles.cover} />
         <View style={styles.info}>
-          <Text weight="bold" style={styles.title}>
+          <Text weight="bold" fontSize={12} style={{ textAlign: 'center' }}>
             {title}
           </Text>
-          <Text style={styles.author}>{author}</Text>
+          <Text fontSize={10}>{author}</Text>
           <View style={styles.bookLength}>
-            <Text style={styles.duration}>{duration}</Text>
-            <Text> | </Text>
-            <Text style={styles.pages}>{pages} páginas</Text>
+            <Text weight="light" fontSize={10}>
+              {duration}
+            </Text>
+            <VerticalLine />
+            <Text weight="light" fontSize={10}>
+              {pages} páginas
+            </Text>
           </View>
         </View>
       </View>
@@ -40,9 +61,6 @@ export default function Book({
 const styles = StyleSheet.create({
   container: {
     maxWidth: 130,
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: '#E7E7E7',
     borderRadius: 10,
   },
 
@@ -53,35 +71,14 @@ const styles = StyleSheet.create({
   },
 
   info: {
-    display: 'flex',
     flexDirection: 'column',
-    padding: 10,
-    justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  title: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-
-  author: {
-    fontSize: 10,
+    padding: 10,
+    gap: 2,
   },
 
   bookLength: {
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  duration: {
-    fontSize: 10,
-  },
-
-  pages: {
-    fontSize: 10,
+    gap: 4,
   },
 });

@@ -1,3 +1,4 @@
+import { useThemeColor } from '@/hooks/useThemeColor';
 import {
   Inter_300Light,
   Inter_400Regular,
@@ -13,10 +14,18 @@ import {
 
 interface TextProps extends RNTextProps {
   weight?: 'light' | 'regular' | 'bold';
+  fontSize?: number;
   style?: RNTextProps['style'];
 }
 
-const Text: React.FC<TextProps> = ({ weight = 'regular', style, ...props }) => {
+const Text: React.FC<TextProps> = ({
+  weight = 'regular',
+  fontSize,
+  style,
+  ...props
+}) => {
+  const themeTextStyle = useThemeColor({}, 'text');
+
   const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,
     Inter_300Light,
@@ -28,14 +37,41 @@ const Text: React.FC<TextProps> = ({ weight = 'regular', style, ...props }) => {
   }
 
   if (weight === 'light') {
-    return <RNText style={[styles.light, style]} {...props} />;
+    return (
+      <RNText
+        style={[
+          { fontSize: fontSize, color: themeTextStyle },
+          styles.light,
+          style,
+        ]}
+        {...props}
+      />
+    );
   }
 
   if (weight === 'bold') {
-    return <RNText style={[styles.bold, style]} {...props} />;
+    return (
+      <RNText
+        style={[
+          { fontSize: fontSize, color: themeTextStyle },
+          styles.bold,
+          style,
+        ]}
+        {...props}
+      />
+    );
   }
 
-  return <RNText style={[styles.regular, style]} {...props} />;
+  return (
+    <RNText
+      style={[
+        { fontSize: fontSize, color: themeTextStyle },
+        styles.regular,
+        style,
+      ]}
+      {...props}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
