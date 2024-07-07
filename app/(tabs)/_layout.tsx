@@ -1,5 +1,5 @@
+import TabBar from '@/components/navigation/TabBar';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import TabBar from '@/components/TabBar';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { Tabs } from 'expo-router';
 

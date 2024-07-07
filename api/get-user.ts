@@ -1,6 +1,6 @@
 import { SignInDto } from './dto/sign-up.dto';
 
-export async function SignUp(body: SignInDto) {
+export async function signUp(body: SignInDto) {
   // Alterar o IP para o IP da sua máquina
   const response = await fetch(
     `http://${process.env.EXPO_PUBLIC_IP}:3333/auth/login`,

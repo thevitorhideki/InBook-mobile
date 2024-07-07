@@ -3,8 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import Text from './Text';
 
 interface IReviewCardProps {
-  username: string;
-  avatarUrl: string;
+  username?: string;
+  avatarUrl?: string;
   title: string;
   content: string;
   recommended: boolean;
@@ -42,6 +42,7 @@ export default function ReviewCard(props: IReviewCardProps) {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     gap: 4,
     padding: 18,
     borderRadius: 8,

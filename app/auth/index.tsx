@@ -1,4 +1,4 @@
-import { SignUp } from '@/api/getUser';
+import { signUp } from '@/api/get-user';
 import { Link } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Button, StyleSheet, TextInput, View } from 'react-native';
@@ -11,7 +11,7 @@ export default function Index() {
     const body = { username, password };
 
     try {
-      const tokens = await SignUp(body);
+      const tokens = await signUp(body);
       console.log(tokens);
       Alert.alert('Login bem-sucedido!', 'Você está logado!');
     } catch (err) {

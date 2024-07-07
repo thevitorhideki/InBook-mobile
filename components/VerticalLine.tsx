@@ -1,3 +1,4 @@
+import { useThemeColor } from '@/hooks/useThemeColor';
 import { View } from 'react-native';
 
 interface IVerticalLineProps {
@@ -6,6 +7,7 @@ interface IVerticalLineProps {
 }
 
 export default function VerticalLine(props: IVerticalLineProps) {
-  const { width = 0.5, color = 'black' } = props;
+  const themeTextStyle = useThemeColor({}, 'text');
+  const { width = 0.5, color = themeTextStyle } = props;
   return <View style={{ borderLeftWidth: width, borderColor: color }} />;
 }

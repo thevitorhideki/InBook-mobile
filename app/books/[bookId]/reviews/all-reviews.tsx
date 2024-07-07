@@ -1,10 +1,10 @@
 import Text from '@/components/Text';
 import { StyleSheet, View } from 'react-native';
 
-export default function Library() {
+export default function Reviews() {
   return (
     <View style={styles.container}>
-      <Text>Library page</Text>
+      <Text>All reviews page</Text>
     </View>
   );
 }

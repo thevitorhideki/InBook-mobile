@@ -1,18 +1,22 @@
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { convertTimeToString } from '@/utils/convertTimeToString';
+import { Image } from 'expo-image';
 import { Link } from 'expo-router';
-import { Image, ImageSourcePropType, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Text from './Text';
 import VerticalLine from './VerticalLine';
 
 type BookProps = {
+  id: number;
   title: string;
   author: string;
-  duration: string;
+  duration: number;
   pages: number;
-  cover: ImageSourcePropType;
+  cover: string;
 };
 
 export default function Book({
+  id,
   title,
   author,
   duration,
@@ -24,13 +28,9 @@ export default function Book({
   return (
     <Link
       href={{
-        pathname: '/books/[slug]',
+        pathname: '/books/[bookId]',
         params: {
-          slug: title,
-          cover: cover,
-          author: author,
-          duration: duration,
-          pages: pages,
+          bookId: id,
         },
       }}
     >
@@ -45,7 +45,7 @@ export default function Book({
           <Text fontSize={10}>{author}</Text>
           <View style={styles.bookLength}>
             <Text weight="light" fontSize={10}>
-              {duration}
+              {convertTimeToString(duration)}
             </Text>
             <VerticalLine />
             <Text weight="light" fontSize={10}>
