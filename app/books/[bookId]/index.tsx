@@ -12,11 +12,10 @@ import { Link, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
 import { ScrollView, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Page() {
   const { bookId } = useLocalSearchParams();
-  const bookDetails = useBookDetails(bookId);
+  const bookDetails = useBookDetails(bookId as string);
 
   const themeBackgroundStyle = useThemeColor({}, 'background');
   const themeCardStyle = useThemeColor({}, 'card');
@@ -28,50 +27,35 @@ export default function Page() {
   const [tab, setTab] = useState('Sinopse');
 
   return (
-    <SafeAreaView
+    <ScrollView
+      showsVerticalScrollIndicator={false}
       style={[styles.container, { backgroundColor: themeBackgroundStyle }]}
     >
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Link href="/">
-            <FontAwesome6
-              name="chevron-left"
-              size={24}
-              color={themeIconStyle}
-            />
-          </Link>
-          <Link href="#">
-            <FontAwesome6
-              name="ellipsis-vertical"
-              size={24}
-              color={themeIconStyle}
-            />
-          </Link>
-        </View>
-        <View style={{ gap: 14 }}>
-          <Image
-            source={bookDetails.coverUrl}
-            style={{
-              width: 200,
-              height: 200,
-              borderRadius: 8,
-              alignSelf: 'center',
-            }}
-          />
-          <View style={styles.bookInfo}>
-            <View style={{ flex: 1 }}>
-              <Text weight="bold" fontSize={20}>
-                {bookDetails.title}
-              </Text>
-              <Text weight="regular" fontSize={14}>
-                {bookDetails.author.name}
-              </Text>
-              <Text weight="light" fontSize={12}>
-                {convertTimeToString(bookDetails.duration)} |{' '}
-                {bookDetails.pages} páginas
-              </Text>
-            </View>
+      <View style={{ gap: 14 }}>
+        <Image
+          source={bookDetails.coverUrl}
+          style={{
+            width: 200,
+            height: 200,
+            borderRadius: 8,
+            alignSelf: 'center',
+          }}
+        />
+        <View style={styles.bookInfo}>
+          <View style={{ flex: 1 }}>
+            <Text weight="bold" fontSize={20}>
+              {bookDetails.title}
+            </Text>
+            <Text weight="regular" fontSize={14}>
+              {bookDetails.author.name}
+            </Text>
+            <Text weight="light" fontSize={12}>
+              {convertTimeToString(bookDetails.duration)} | {bookDetails.pages}{' '}
+              páginas
+            </Text>
           </View>
+        </View>
+        {bookDetails.reviewCount > 0 ? (
           <Text
             weight="bold"
             fontSize={12}
@@ -83,90 +67,89 @@ export default function Page() {
               ({bookDetails.reviewCount})
             </Text>
           </Text>
-          <View style={styles.buttonsContainer}>
-            <Link href={'#'}>
-              <View
-                style={[styles.playButton, { backgroundColor: themeCardStyle }]}
-              >
-                <FontAwesome6 name="glasses" size={24} color={themeIconStyle} />
-                <Text style={{ textAlign: 'center' }}>Ler</Text>
-              </View>
-            </Link>
-            <Link href={'#'}>
-              <View
-                style={[styles.playButton, { backgroundColor: themeCardStyle }]}
-              >
-                <FontAwesome6
-                  name="headphones"
-                  size={24}
-                  color={themeIconStyle}
-                />
-                <Text style={{ textAlign: 'center' }}>Escutar</Text>
-              </View>
-            </Link>
-          </View>
-        </View>
-        <View style={styles.tabs}>
-          <Text
-            weight="bold"
-            style={
-              tab === 'Sinopse'
-                ? [styles.tabActive, { borderColor: themeTabSelected }]
-                : [
-                    styles.tabInactive,
-                    { borderColor: themeTabDefault, color: themeTabDefault },
-                  ]
-            }
-            onPress={() => {
-              setTab('Sinopse');
-            }}
-          >
-            Sinopse
-          </Text>
-          <Text
-            weight="bold"
-            style={
-              tab === 'Author'
-                ? [styles.tabActive, { borderColor: themeTabSelected }]
-                : [
-                    styles.tabInactive,
-                    { borderColor: themeTabDefault, color: themeTabDefault },
-                  ]
-            }
-            onPress={() => {
-              setTab('Author');
-            }}
-          >
-            Autor
-          </Text>
-          <Text
-            weight="bold"
-            style={
-              tab === 'Reviews'
-                ? [styles.tabActive, { borderColor: themeTabSelected }]
-                : [
-                    styles.tabInactive,
-                    { borderColor: themeTabDefault, color: themeTabDefault },
-                  ]
-            }
-            onPress={() => {
-              setTab('Reviews');
-            }}
-          >
-            Avaliações
-          </Text>
-        </View>
-        {tab === 'Sinopse' ? (
-          <Sinopse description={bookDetails.description} />
         ) : null}
-        {tab === 'Author' ? (
-          <Author
-            authorDetails={bookDetails.author}
-            bookDetails={bookDetails}
-          />
-        ) : null}
-        {tab === 'Reviews' ? <Reviews bookDetails={bookDetails} /> : null}
-      </ScrollView>
-    </SafeAreaView>
+        <View style={styles.buttonsContainer}>
+          <Link href={'#'}>
+            <View
+              style={[styles.playButton, { backgroundColor: themeCardStyle }]}
+            >
+              <FontAwesome6 name="glasses" size={24} color={themeIconStyle} />
+              <Text style={{ textAlign: 'center' }}>Ler</Text>
+            </View>
+          </Link>
+          <Link href={'#'}>
+            <View
+              style={[styles.playButton, { backgroundColor: themeCardStyle }]}
+            >
+              <FontAwesome6
+                name="headphones"
+                size={24}
+                color={themeIconStyle}
+              />
+              <Text style={{ textAlign: 'center' }}>Escutar</Text>
+            </View>
+          </Link>
+        </View>
+      </View>
+      <View style={styles.tabs}>
+        <Text
+          weight="bold"
+          style={
+            tab === 'Sinopse'
+              ? [styles.tabActive, { borderColor: themeTabSelected }]
+              : [
+                  styles.tabInactive,
+                  { borderColor: themeTabDefault, color: themeTabDefault },
+                ]
+          }
+          onPress={() => {
+            setTab('Sinopse');
+          }}
+        >
+          Sinopse
+        </Text>
+        <Text
+          weight="bold"
+          style={
+            tab === 'Author'
+              ? [styles.tabActive, { borderColor: themeTabSelected }]
+              : [
+                  styles.tabInactive,
+                  { borderColor: themeTabDefault, color: themeTabDefault },
+                ]
+          }
+          onPress={() => {
+            setTab('Author');
+          }}
+        >
+          Autor
+        </Text>
+        <Text
+          weight="bold"
+          style={
+            tab === 'Reviews'
+              ? [styles.tabActive, { borderColor: themeTabSelected }]
+              : [
+                  styles.tabInactive,
+                  { borderColor: themeTabDefault, color: themeTabDefault },
+                ]
+          }
+          onPress={() => {
+            setTab('Reviews');
+          }}
+        >
+          Avaliações
+        </Text>
+      </View>
+      {tab === 'Sinopse' ? (
+        <Sinopse description={bookDetails.description} />
+      ) : null}
+      {tab === 'Author' ? (
+        <Author authorDetails={bookDetails.author} bookDetails={bookDetails} />
+      ) : null}
+      {tab === 'Reviews' ? (
+        <Reviews bookDetails={bookDetails} bookId={bookId} />
+      ) : null}
+    </ScrollView>
   );
 }

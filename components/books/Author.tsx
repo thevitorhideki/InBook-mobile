@@ -18,7 +18,7 @@ export default function Author({ authorDetails, bookDetails }) {
           <Text style={{ textAlign: 'justify' }}>{authorDetails.about}</Text>
         </View>
       </View>
-      {authorDetails.books > 0 ? (
+      {authorDetails.books.length > 1 ? (
         <View style={{ gap: 6 }}>
           <Text fontSize={14}>Outras obras de {authorDetails.name}</Text>
           <View style={{ flexDirection: 'row', gap: 20 }}>

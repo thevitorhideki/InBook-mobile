@@ -6,13 +6,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 8,
-  },
   bookCover: {
     width: 200,
     height: 200,

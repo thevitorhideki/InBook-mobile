@@ -1,12 +1,7 @@
-export class ReviewDetailsDto {
-  reviewId: number;
+export class CreateReviewDto {
   recommended: boolean;
   enjoyedContent: boolean;
   enjoyedNarrator: boolean;
   title?: string;
   content?: string;
-  user: {
-    username: string;
-    avatarUrl?: string;
-  };
 }

@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    display: 'flex',
     flexDirection: 'row',
     paddingVertical: 20,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   collection: {
@@ -55,13 +55,11 @@ const styles = StyleSheet.create({
   },
 
   collectionHeader: {
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
   books: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 20,

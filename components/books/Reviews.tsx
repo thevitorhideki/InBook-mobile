@@ -1,12 +1,11 @@
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { generateSlug } from '@/utils/generateSlug';
 import { Link } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import ReviewCard from '../ReviewCard';
 import Text from '../Text';
 import VerticalLine from '../VerticalLine';
 
-export default function Reviews({ bookDetails }) {
+export default function Reviews({ bookDetails, bookId }) {
   const themeCardStyle = useThemeColor({}, 'card');
   const themeBorderStyle = useThemeColor({}, 'border');
 
@@ -14,7 +13,7 @@ export default function Reviews({ bookDetails }) {
     <View style={{ alignItems: 'center', marginBottom: 22 }}>
       {bookDetails.reviewCount === 0 ? (
         <Link
-          href={`/books/${generateSlug(bookDetails.title)}/reviews/book-review`}
+          href={`/books/${bookId}/reviews/book-review`}
           style={[
             styles.reviewButton,
             {
@@ -68,9 +67,7 @@ export default function Reviews({ bookDetails }) {
             }}
           >
             <Link
-              href={`/books/${generateSlug(
-                bookDetails.title,
-              )}/reviews/book-review`}
+              href={`/books/${bookId}/reviews/book-review`}
               style={[
                 styles.reviewButton,
                 {
@@ -83,7 +80,10 @@ export default function Reviews({ bookDetails }) {
                 Avalie essa obra
               </Text>
             </Link>
-            {bookDetails.reviews.map((review) => {
+            {bookDetails.reviews.slice(0, 10).map((review) => {
+              if (review.title === '' && review.content === '') {
+                return null;
+              }
               return (
                 <ReviewCard
                   key={review.user.username}
@@ -93,22 +93,22 @@ export default function Reviews({ bookDetails }) {
                 />
               );
             })}
-            <Link
-              href={`/books/${generateSlug(
-                bookDetails.title,
-              )}/reviews/all-reviews`}
-              style={[
-                styles.reviewButton,
-                {
-                  backgroundColor: themeCardStyle,
-                  borderColor: themeBorderStyle,
-                },
-              ]}
-            >
-              <Text weight="bold" fontSize={12}>
-                Ver todas as avaliações
-              </Text>
-            </Link>
+            {bookDetails.reviewCount > 10 ? (
+              <Link
+                href={`/books/${bookId}/reviews/all-reviews`}
+                style={[
+                  styles.reviewButton,
+                  {
+                    backgroundColor: themeCardStyle,
+                    borderColor: themeBorderStyle,
+                  },
+                ]}
+              >
+                <Text weight="bold" fontSize={12}>
+                  Ver todas as avaliações
+                </Text>
+              </Link>
+            ) : null}
           </View>
         </>
       )}

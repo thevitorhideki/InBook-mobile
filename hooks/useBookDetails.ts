@@ -3,7 +3,7 @@ import { getAuthorById } from '@/api/get-author-by-id';
 import { getBookById } from '@/api/get-book-by-id';
 import { useEffect, useState } from 'react';
 
-export const useBookDetails = (bookId) => {
+export const useBookDetails = (bookId: string) => {
   const [bookDetails, setBookDetails] = useState({
     coverUrl: 'https://images.unsplash.com/photo-1612830725324-4b3b3b3b3b3b',
     title: '',
@@ -51,20 +51,22 @@ export const useBookDetails = (bookId) => {
           recommendedPercentage: Math.round(
             (recommendedCount / bookDetails.reviewsCount) * 100,
           ),
-          enjoyedContentPercentage:
+          enjoyedContentPercentage: Math.round(
             (bookDetails.reviews.reduce(
               (acc, review) => acc + (review.enjoyedContent ? 1 : 0),
               0,
             ) /
               bookDetails.reviewsCount) *
-            100,
-          enjoyedNarrationPercentage:
+              100,
+          ),
+          enjoyedNarrationPercentage: Math.round(
             (bookDetails.reviews.reduce(
               (acc, review) => acc + (review.enjoyedNarrator ? 1 : 0),
               0,
             ) /
               bookDetails.reviewsCount) *
-            100,
+              100,
+          ),
           description: bookDetails.description,
         });
       } catch (error) {
