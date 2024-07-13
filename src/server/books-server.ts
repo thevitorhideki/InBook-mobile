@@ -1,5 +1,5 @@
 import { api } from './api';
-import { Review } from './reviews-server';
+import { ReviewDetails } from './reviews-server';
 
 export type BookDetails = {
   id: number;
@@ -20,7 +20,7 @@ export type BookDetails = {
     about: string;
     books: BookCard[];
   };
-  reviews: Review[];
+  reviews: ReviewDetails[];
 };
 
 export type BookCard = {
@@ -36,7 +36,7 @@ export type BookCard = {
 
 async function getById(bookId: string) {
   try {
-    const { data } = await api.get<BookDetails>(`/books/${bookId}`);
+    const { data } = await api.get<BookDetails>(`books/${bookId}`);
 
     return data;
   } catch (error) {
@@ -48,7 +48,7 @@ async function getById(bookId: string) {
 async function getByGenre(genre: string, limit?: number) {
   try {
     const { data } = await api.get<{ books: BookCard[] }>(
-      `/books/genres/${genre}?limit=${limit || 10}`,
+      `books/genres/${genre}?limit=${limit || 10}`,
     );
 
     return data.books;
@@ -58,7 +58,7 @@ async function getByGenre(genre: string, limit?: number) {
 }
 
 async function getByRelevance(limit?: number) {
-  const { data } = await api.get<{ books: BookCard[] }>(`/books/relevance?limit=${limit || 10}`);
+  const { data } = await api.get<{ books: BookCard[] }>(`books/relevance?limit=${limit || 10}`);
 
   return data.books;
 }

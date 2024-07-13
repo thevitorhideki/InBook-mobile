@@ -7,10 +7,11 @@ import { Header } from '@/components/navigation/Header';
 import { Text } from '@/components/text';
 import { BookDetails, booksServer } from '@/server/books-server';
 import clsx from 'clsx';
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 
-import { Image, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 export type BookData = {
   recommendedPercentage: number;
@@ -82,13 +83,13 @@ export default function Book() {
   }
 
   return (
-    <View className="px-5">
+    <View className="bg-zinc-50 px-5 dark:bg-zinc-950">
       <Header />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="gap-3">
           <Image
             source={{ uri: bookDetails.coverImageUrl }}
-            className="h-52 w-52 self-center rounded-xl"
+            style={{ height: 208, width: 208, alignSelf: 'center', borderRadius: 16 }}
           />
           <View className="flex-row">
             <View className="flex-1 items-center gap-2">

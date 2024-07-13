@@ -1,7 +1,7 @@
 export const colors = {
   light: {
     text: '#18181b',
-    background: '#ffffff',
+    background: '#fafafa',
     icon: '#fafafa',
     card: '#F1F1F1',
     border: '#E7E7E7',
@@ -15,7 +15,7 @@ export const colors = {
   },
   dark: {
     text: '#BEBEBE',
-    background: '#030712',
+    background: '#09090b',
     icon: '#BEBEBE',
     card: '#111827',
     border: '#1D1D1D',
@@ -28,3 +28,6 @@ export const colors = {
     notRecommendedFillColor: '#470909',
   },
 };
+
+export const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';

@@ -17,7 +17,7 @@ export type AuthorDetails = {
 
 async function getById(authorId: number) {
   try {
-    const { data } = await api.get<AuthorDetails>(`/authors/${authorId}`);
+    const { data } = await api.get<AuthorDetails>(`authors/${authorId}`);
 
     return data;
   } catch (error) {

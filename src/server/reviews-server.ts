@@ -27,7 +27,7 @@ export type CreateReview = {
 
 async function createReview(bookId: string, review: CreateReview) {
   try {
-    await api.post(`/books/${bookId}/reviews`, review);
+    await api.post(`books/${bookId}/reviews`, review);
   } catch (error) {
     console.error(error);
     throw new Error(error);
@@ -36,7 +36,7 @@ async function createReview(bookId: string, review: CreateReview) {
 
 async function getReviews(bookId: string) {
   try {
-    const response = await api.get(`/books/${bookId}/reviews`);
+    const response = await api.get(`books/${bookId}/reviews`);
     return response.data;
   } catch (error) {
     console.error(error);

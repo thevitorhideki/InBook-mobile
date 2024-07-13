@@ -1,4 +1,4 @@
-import { BookData } from '@/app/books/[bookId]';
+import { BookData } from '@/app/(app)/books/[bookId]';
 import { Link } from 'expo-router';
 import { View } from 'react-native';
 import ReviewCard from '../reviewCard';

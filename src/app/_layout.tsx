@@ -1,5 +1,5 @@
 import { Loading } from '@/components/loading';
-import TabBar from '@/components/navigation/TabBar';
+import { SessionProvider } from '@/hooks/authContext';
 import '@/styles/globals.css';
 import {
   Inter_300Light,
@@ -10,9 +10,10 @@ import {
 import { Slot } from 'expo-router';
 import { useColorScheme } from 'nativewind';
 import { StatusBar, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function RootLayout() {
+  const insets = useSafeAreaInsets();
   const { colorScheme } = useColorScheme();
   const [fontsLoaded, fontError] = useFonts({
     Inter_300Light,
@@ -25,15 +26,14 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <View className="flex-1 bg-zinc-50 dark:bg-zinc-950">
+    <SessionProvider>
+      <View className="flex-1 bg-zinc-50 dark:bg-zinc-950" style={{ paddingTop: insets.top }}>
         <StatusBar
           barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
           backgroundColor="transparent"
         />
         <Slot />
       </View>
-      <TabBar />
-    </SafeAreaProvider>
+    </SessionProvider>
   );
 }

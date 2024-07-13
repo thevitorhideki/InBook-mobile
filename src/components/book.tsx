@@ -1,5 +1,6 @@
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Text } from './text';
 
 type BookProps = {
@@ -16,11 +17,11 @@ export function Book({ id, title, author, cover }: BookProps) {
 
   return (
     <TouchableOpacity
-      className="max-w-48"
+      className="mr-5 max-w-48"
       onPress={handleNavigateToBookDetails}
       activeOpacity={0.5}
     >
-      <Image source={{ uri: cover }} className="h-48 w-48 rounded-lg" />
+      <Image source={cover} style={{ width: 172, height: 172, borderRadius: 8 }} transition={500} />
       <View className="py-1">
         <Text className="text-md font-semibold">{title}</Text>
         <Text className="font-light text-sm">{author}</Text>

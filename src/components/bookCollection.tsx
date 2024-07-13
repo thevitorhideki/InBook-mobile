@@ -3,7 +3,6 @@ import { Genre } from '@/server/enums/genre';
 import { useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { Book } from './book';
-import { Loading } from './loading';
 
 type BookCollectionProps = {
   title: string;
@@ -38,19 +37,29 @@ export function BookCollection({ title, genre }: BookCollectionProps) {
     getBookCardDetails(genre);
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <View className="gap-2">
       <View className="flex-row items-center justify-between">
         <Text className="text-lg dark:color-zinc-200">{title}</Text>
-        {books.length > 10 && <Text className="text-sm font-light">Ver todos</Text>}
+        {books.length > 10 && <Text className="font-light text-sm">Ver todos</Text>}
       </View>
 
+      {isLoading && (
+        <View className="flex-row gap-5 opacity-20">
+          <View>
+            <View className="h-48 w-48 rounded-lg bg-zinc-500" />
+            <View className="my-1 h-4 w-40 rounded-sm bg-zinc-500" />
+            <View className="h-2 w-32 rounded-sm bg-zinc-500" />
+          </View>
+          <View>
+            <View className="h-48 w-48 rounded-lg bg-zinc-500" />
+            <View className="my-1 h-4 w-40 rounded-sm bg-zinc-500" />
+            <View className="h-2 w-32 rounded-sm bg-zinc-500" />
+          </View>
+        </View>
+      )}
+
       <FlatList
-        contentContainerClassName="gap-5"
         showsHorizontalScrollIndicator={false}
         horizontal
         data={books}
