@@ -3,7 +3,7 @@ import { Text } from '../text';
 
 export default function Sinopse({ description }) {
   return (
-    <View className="pb-64">
+    <View className="pb-44">
       <Text className="text-justify">{description}</Text>
     </View>
   );

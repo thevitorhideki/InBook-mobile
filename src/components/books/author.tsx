@@ -1,6 +1,7 @@
 import { BookDetails } from '@/server/books-server';
+import { Image } from 'expo-image';
 import { useLocalSearchParams } from 'expo-router';
-import { FlatList, Image, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { Book } from '../book';
 import { Text } from '../text';
 
@@ -9,17 +10,19 @@ export default function Author({ bookDetails }: { bookDetails: BookDetails }) {
   const { author } = bookDetails;
 
   return (
-    <View style={{ gap: 14, marginBottom: 22 }}>
-      <View style={{ flexDirection: 'row', gap: 10 }}>
+    <View className="gap-4 pb-44">
+      <View className="flex-row gap-3">
         <Image
-          source={{ uri: author.avatarUrl }}
+          source={author.avatarUrl}
           style={{ height: 70, width: 70, borderRadius: 35 }}
+          transition={500}
         />
         <View style={{ flex: 1 }}>
-          <Text className="text-sm font-semibold">{author.name}</Text>
+          <Text className="font-semibold text-sm">{author.name}</Text>
           <Text className="text-justify">{author.about}</Text>
         </View>
       </View>
+
       {author.books.length > 1 ? (
         <View className="gap-2">
           <Text className="text-base">Outras obras de {author.name}</Text>

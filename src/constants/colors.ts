@@ -2,7 +2,7 @@ export const colors = {
   light: {
     text: '#18181b',
     background: '#fafafa',
-    icon: '#fafafa',
+    icon: '#18181b',
     card: '#F1F1F1',
     border: '#E7E7E7',
     tabIconDefault: '#a1a1aa',

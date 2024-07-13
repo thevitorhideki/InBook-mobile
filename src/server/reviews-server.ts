@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from './api';
 
 export type ReviewDetails = {
@@ -8,6 +9,7 @@ export type ReviewDetails = {
   title?: string;
   content?: string;
   user: {
+    id: string;
     username: string;
     avatarUrl?: string;
   };
@@ -26,10 +28,26 @@ export type CreateReview = {
 };
 
 async function createReview(bookId: string, review: CreateReview) {
+  let token = '';
+
   try {
-    await api.post(`books/${bookId}/reviews`, review);
+    token = await AsyncStorage.getItem('session');
   } catch (error) {
     console.error(error);
+  }
+
+  try {
+    await api.post(`books/${bookId}/reviews`, review, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    if (error.response.status === 400) {
+      throw new Error('Dados inválidos');
+    } else if (error.response.status === 409) {
+      throw new Error('Você já avaliou este livro');
+    }
     throw new Error(error);
   }
 }

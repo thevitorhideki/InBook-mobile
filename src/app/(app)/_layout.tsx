@@ -2,7 +2,7 @@ import { Loading } from '@/components/loading';
 import { useSession } from '@/hooks/authContext';
 import { authServer } from '@/server/auth-server';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Redirect, Slot } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 
@@ -20,7 +20,7 @@ export default function AppLayout() {
       }
     };
 
-    setInterval(refreshToken, 1000 * 60 * 1);
+    setInterval(refreshToken, 1000 * 60 * 15);
   }, []);
 
   if (isLoading) {
@@ -33,7 +33,10 @@ export default function AppLayout() {
 
   return (
     <View className="flex-1 bg-zinc-50 dark:bg-zinc-950">
-      <Slot />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="books" />
+      </Stack>
     </View>
   );
 }

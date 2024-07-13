@@ -8,8 +8,8 @@ import { Text } from '@/components/text';
 import { BookDetails, booksServer } from '@/server/books-server';
 import clsx from 'clsx';
 import { Image } from 'expo-image';
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useState } from 'react';
 
 import { ScrollView, View } from 'react-native';
 
@@ -74,9 +74,11 @@ export default function Book() {
     }
   }
 
-  useEffect(() => {
-    getBookDetails();
-  }, [bookId]);
+  useFocusEffect(
+    useCallback(() => {
+      getBookDetails();
+    }, [bookId]),
+  );
 
   if (isLoadingBookDetails) {
     return <Loading />;
@@ -84,7 +86,7 @@ export default function Book() {
 
   return (
     <View className="bg-zinc-50 px-5 dark:bg-zinc-950">
-      <Header />
+      <Header to={() => router.navigate('/')} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="gap-3">
           <Image

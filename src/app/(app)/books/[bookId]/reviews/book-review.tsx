@@ -20,6 +20,11 @@ export default function Reviews() {
     try {
       setIsCreatingReview(true);
 
+      if (title && !content) {
+        Alert.alert('Dados inválidos', 'Por favor, escreva sobre sua experiência');
+        return;
+      }
+
       await reviewsServer.createReview(bookId as string, {
         enjoyedContent,
         enjoyedNarration,
@@ -33,13 +38,9 @@ export default function Reviews() {
       });
 
       Alert.alert('Avaliação enviada!', 'Obrigado por avaliar a obra!');
-      router.replace(`books/${bookId}/reviews/all-reviews`);
+      router.navigate(`books/${bookId}/reviews/all-reviews`);
     } catch (error) {
-      if (error.message === 'Usuário não logado') {
-        Alert.alert('Usuário não autenticado', 'Você precisa estar logado para avaliar um livro');
-        router.replace('auth');
-        return;
-      } else if (error.message === 'Dados inválidos') {
+      if (error.message === 'Dados inválidos') {
         Alert.alert('Dados inválidos', 'Por favor, preencha todos os campos');
         return;
       } else if (error.message === 'Você já avaliou este livro') {
@@ -160,17 +161,19 @@ export default function Reviews() {
             className="rounded-lg border-2 border-zinc-400 p-3 placeholder:color-zinc-400 dark:border-zinc-800 dark:color-zinc-300 dark:placeholder:color-zinc-500"
             value={title}
             onChangeText={setTitle}
+            autoCorrect={false}
           />
           <Text>Escreva sua avaliação</Text>
           <TextInput
+            placeholder="Escreva sobre sua experiência"
             className="rounded-lg border-2 border-zinc-400 p-3 placeholder:color-zinc-400 dark:border-zinc-800 dark:color-zinc-300 dark:placeholder:color-zinc-500"
             multiline={true}
-            placeholder="Escreva sobre sua experiência"
             value={content}
             onChangeText={setContent}
+            autoCorrect={false}
           />
           <Text
-            className="mb-5 rounded-lg border-2 border-zinc-300 bg-zinc-200 py-4 text-center font-semibold text-base dark:border-0 dark:bg-zinc-900"
+            className="mb-5 rounded-lg border-2 bg-zinc-950 py-4 text-center font-semibold text-base color-zinc-50 dark:border-0 dark:bg-zinc-900"
             onPress={handleSubmitReview}
           >
             Enviar
