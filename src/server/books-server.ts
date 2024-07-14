@@ -63,4 +63,10 @@ async function getByRelevance(limit?: number) {
   return data.books;
 }
 
-export const booksServer = { getById, getByGenre, getByRelevance };
+async function searchByTitle(title: string) {
+  const { data } = await api.get<{ books: BookCard[] }>(`books/search?title=${title}`);
+
+  return data.books;
+}
+
+export const booksServer = { getById, getByGenre, getByRelevance, searchByTitle };

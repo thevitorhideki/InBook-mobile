@@ -1,8 +1,9 @@
 import { Loading } from '@/components/loading';
+import TabBar from '@/components/navigation/TabBar';
 import { useSession } from '@/hooks/authContext';
 import { authServer } from '@/server/auth-server';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, Slot } from 'expo-router';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 
@@ -33,10 +34,8 @@ export default function AppLayout() {
 
   return (
     <View className="flex-1 bg-zinc-50 dark:bg-zinc-950">
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="books" />
-      </Stack>
+      <Slot />
+      <TabBar />
     </View>
   );
 }

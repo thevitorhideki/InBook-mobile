@@ -1,8 +1,8 @@
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { Ionicons } from '@expo/vector-icons';
 import clsx from 'clsx';
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, usePathname } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Text } from '../text';
 
@@ -14,9 +14,18 @@ enum Tab {
 
 export default function TabBar() {
   const [selectedTab, setSelectedTab] = useState(Tab.Home);
+  const pathname = usePathname();
 
   const themeTabIconDefault = useThemeColor({}, 'tabIconDefault');
   const themeTabIconSelected = useThemeColor({}, 'tabIconSelected');
+
+  useEffect(() => {
+    pathname === '/'
+      ? setSelectedTab(Tab.Home)
+      : pathname === '/explore'
+        ? setSelectedTab(Tab.Explore)
+        : pathname === '/library' && setSelectedTab(Tab.Library);
+  }, [pathname]);
 
   return (
     <View className="absolute bottom-0 w-full flex-row items-center justify-around border-t border-zinc-200 bg-white py-3 dark:border-zinc-900 dark:bg-[#09090bf8]">
@@ -46,7 +55,7 @@ export default function TabBar() {
         className="flex-1 items-center"
         onPress={() => {
           setSelectedTab(Tab.Explore);
-          router.navigate('/explore');
+          router.push('/explore');
         }}
         activeOpacity={0.5}
       >
@@ -68,7 +77,7 @@ export default function TabBar() {
         className="flex-1 items-center"
         onPress={() => {
           setSelectedTab(Tab.Library);
-          router.navigate('/library');
+          router.push('/library');
         }}
         activeOpacity={0.5}
       >
