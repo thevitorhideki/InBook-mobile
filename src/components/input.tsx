@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/styles/colors';
 import clsx from 'clsx';
 import { useColorScheme } from 'nativewind';
 import { Platform, TextInput, TextInputProps, View, ViewProps } from 'react-native';

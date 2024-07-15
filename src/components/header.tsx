@@ -1,10 +1,16 @@
 import { useSession } from '@/hooks/authContext';
-import { UserData, userServer } from '@/server/user-server';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'expo-image';
-import { Redirect, usePathname } from 'expo-router';
+import { usePathname } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { Text } from './text';
+
+type UserData = {
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
+};
 
 export function Header() {
   const [userData, setUserData] = useState({} as UserData);
@@ -13,9 +19,9 @@ export function Header() {
 
   async function fetchUserData() {
     try {
-      const data = await userServer.getUserData();
+      const data = await AsyncStorage.getItem('user');
 
-      setUserData(data);
+      setUserData(JSON.parse(data || '{}'));
     } catch (error) {
       console.error(error);
     }
@@ -25,18 +31,16 @@ export function Header() {
     fetchUserData();
   }, []);
 
-  if (!userData.id) {
-    <Redirect href={'/sign-in'} />;
-  }
-
   return (
     <View className="w-full flex-row items-center justify-between p-5">
-      <Text className="font-semibold text-3xl">
-        {(pathname === '/' &&
-          `Olá, ${userData?.profile ? userData.profile.firstName : 'bem vindo de volta'}!`) ||
-          (pathname === '/explore' && 'Explorar') ||
-          (pathname === '/library' && 'Biblioteca')}
-      </Text>
+      <View>
+        <Text className="font-semibold text-3xl">
+          {(pathname === '/' && `Olá, ${userData.firstName ? userData.firstName : ''}`) ||
+            (pathname === '/explore' && 'Explorar') ||
+            (pathname === '/library' && 'Biblioteca')}
+        </Text>
+        {pathname === '/' && <Text>Bem vindo de volta 👋</Text>}
+      </View>
       <Pressable
         onPress={() => {
           signOut();
@@ -44,7 +48,7 @@ export function Header() {
       >
         <Image
           style={{ width: 36, height: 36, borderRadius: 20 }}
-          source={userData?.profile?.avatarUrl}
+          source={userData.avatarUrl}
           contentFit="cover"
           transition={500}
         />

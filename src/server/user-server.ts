@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { api } from './api';
 
 export type UserData = {
@@ -16,7 +17,7 @@ async function getUserData(): Promise<UserData> {
   let token = '';
 
   try {
-    token = await AsyncStorage.getItem('session');
+    token = await SecureStore.getItemAsync('session');
   } catch (error) {
     throw new Error(error);
   }
@@ -27,6 +28,9 @@ async function getUserData(): Promise<UserData> {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    await AsyncStorage.setItem('user', JSON.stringify(response.data.profile));
+
     return response.data;
   } catch (error) {
     if (error.response.status === 401) {

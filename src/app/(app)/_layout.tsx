@@ -1,8 +1,8 @@
 import { Loading } from '@/components/loading';
 import { useSession } from '@/hooks/authContext';
 import { authServer } from '@/server/auth-server';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Redirect, Slot } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 
@@ -13,8 +13,8 @@ export default function AppLayout() {
     const refreshToken = async () => {
       try {
         const tokens = await authServer.refreshToken();
-        await AsyncStorage.setItem('session', tokens.access_token);
-        await AsyncStorage.setItem('refresh_token', tokens.refresh_token);
+        await SecureStore.setItemAsync('session', tokens.access_token);
+        await SecureStore.setItemAsync('refresh_token', tokens.refresh_token);
       } catch (error) {
         console.error(error);
       }

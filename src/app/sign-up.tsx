@@ -1,8 +1,8 @@
 import { Text } from '@/components/text';
 import { useSession } from '@/hooks/authContext';
 import { authServer } from '@/server/auth-server';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import { useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
 
@@ -15,7 +15,7 @@ export default function SingUp() {
   async function handleSignUp() {
     try {
       const tokens = await authServer.signUp({ username, email, password });
-      await AsyncStorage.setItem('refresh_token', tokens.refresh);
+      await SecureStore.setItemAsync('refresh_token', tokens.refresh);
       signIn(tokens.access_token);
       router.replace('/');
     } catch (error) {

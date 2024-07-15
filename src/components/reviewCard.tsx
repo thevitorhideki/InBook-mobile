@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/styles/colors';
 import { Image } from 'expo-image';
 import { ThumbsDown, ThumbsUp } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';

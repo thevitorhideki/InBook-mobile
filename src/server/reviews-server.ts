@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { api } from './api';
 
 export type ReviewDetails = {
@@ -31,7 +31,7 @@ async function createReview(bookId: string, review: CreateReview) {
   let token = '';
 
   try {
-    token = await AsyncStorage.getItem('session');
+    token = await SecureStore.getItemAsync('session');
   } catch (error) {
     console.error(error);
   }

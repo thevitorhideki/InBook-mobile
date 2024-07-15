@@ -1,9 +1,9 @@
 import { Book } from '@/components/book';
 import { Input } from '@/components/input';
 import { Text } from '@/components/text';
-import { colors } from '@/constants/colors';
 import { BookCard, booksServer } from '@/server/books-server';
 import { Genre } from '@/server/enums/genre';
+import { colors } from '@/styles/colors';
 import { toPascalCase } from '@/utils/toPascalCase';
 import { Search, X } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
@@ -36,7 +36,7 @@ export default function Explore() {
   }, [search]);
 
   return (
-    <View className="flex-1 gap-3 px-5">
+    <View className="flex-1 gap-4 px-5">
       <Input variant="tertiary">
         <Search size={20} color={colors.zinc[400]} />
         <Input.Field

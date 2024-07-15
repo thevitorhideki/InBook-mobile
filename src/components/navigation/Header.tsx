@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/styles/colors';
 import { router } from 'expo-router';
 import { ChevronLeft, EllipsisVertical } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';

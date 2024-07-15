@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/styles/colors';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'nativewind';
 

@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { api } from './api';
 
 type SignInBody = {
@@ -35,8 +35,8 @@ async function refreshToken() {
   let session = '';
 
   try {
-    session = await AsyncStorage.getItem('session');
-    refresh_token = await AsyncStorage.getItem('refresh_token');
+    session = await SecureStore.getItemAsync('session');
+    refresh_token = await SecureStore.getItemAsync('refresh_token');
   } catch (error) {
     throw new Error(error);
   }

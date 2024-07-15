@@ -176,7 +176,7 @@ export default function Book() {
             (tab === 'Reviews' && <Reviews bookDetails={bookDetails} />)}
         </ScrollView>
       </View>
-      <ToolBar />
+      <ToolBar bookId={parseInt(bookId)} />
     </>
   );
 }
