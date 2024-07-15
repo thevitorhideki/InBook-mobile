@@ -1,7 +1,7 @@
 import { useSession } from '@/hooks/authContext';
 import { UserData, userServer } from '@/server/user-server';
 import { Image } from 'expo-image';
-import { usePathname } from 'expo-router';
+import { Redirect, usePathname } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { Text } from './text';
@@ -24,6 +24,10 @@ export function Header() {
   useEffect(() => {
     fetchUserData();
   }, []);
+
+  if (!userData.id) {
+    <Redirect href={'/sign-in'} />;
+  }
 
   return (
     <View className="w-full flex-row items-center justify-between p-5">

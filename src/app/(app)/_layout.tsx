@@ -1,5 +1,4 @@
 import { Loading } from '@/components/loading';
-import TabBar from '@/components/navigation/TabBar';
 import { useSession } from '@/hooks/authContext';
 import { authServer } from '@/server/auth-server';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,7 +34,6 @@ export default function AppLayout() {
   return (
     <View className="flex-1 bg-zinc-50 dark:bg-zinc-950">
       <Slot />
-      <TabBar />
     </View>
   );
 }

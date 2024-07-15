@@ -28,7 +28,7 @@ export default function TabBar() {
   }, [pathname]);
 
   return (
-    <View className="absolute bottom-0 w-full flex-row items-center justify-around border-t border-zinc-200 bg-white py-3 dark:border-zinc-900 dark:bg-[#09090bf8]">
+    <View className="absolute bottom-0 w-full flex-row items-center justify-around border-t border-zinc-200 bg-zinc-50 py-3 dark:border-zinc-900 dark:bg-[#09090bf0]">
       <TouchableOpacity
         className="flex-1 items-center"
         onPress={() => {

@@ -10,7 +10,7 @@ export default function Author({ bookDetails }: { bookDetails: BookDetails }) {
   const { author } = bookDetails;
 
   return (
-    <View className="gap-4 pb-44">
+    <View className="gap-4 pb-48">
       <View className="flex-row gap-3">
         <Image
           source={author.avatarUrl}
@@ -19,7 +19,7 @@ export default function Author({ bookDetails }: { bookDetails: BookDetails }) {
         />
         <View style={{ flex: 1 }}>
           <Text className="font-semibold text-sm">{author.name}</Text>
-          <Text className="text-justify">{author.about}</Text>
+          <Text className="text-justify text-base">{author.about}</Text>
         </View>
       </View>
 

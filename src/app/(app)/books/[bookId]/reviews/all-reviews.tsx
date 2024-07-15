@@ -101,7 +101,7 @@ export default function Reviews() {
           </View>
         </View>
 
-        <View className="mt-4 gap-3 pb-44">
+        <View className="mt-4 gap-3 pb-28">
           {!hasReviewed ? (
             <Link
               href={`/books/${bookId}/reviews/book-review`}

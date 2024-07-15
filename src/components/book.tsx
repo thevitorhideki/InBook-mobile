@@ -49,7 +49,7 @@ export function Book({
       )) ||
         (variation === 'secondary' && (
           <TouchableOpacity activeOpacity={0.5} onPress={handleNavigateToBookDetails}>
-            <View className="w-full flex-row rounded-lg bg-zinc-900">
+            <View className="w-full flex-row rounded-lg bg-zinc-200 dark:bg-zinc-900">
               <Image
                 source={cover}
                 style={{ width: 128, height: 128, borderRadius: 8 }}

@@ -1,4 +1,5 @@
 import { convertTimeToString } from '@/utils/convertTimeToString';
+import { toPascalCase } from '@/utils/toPascalCase';
 import { View } from 'react-native';
 import { Text } from '../text';
 
@@ -16,27 +17,35 @@ export function Details(bookDetails: BookDetails) {
       <View className="flex-row">
         <Text className="flex-1 font-semibold text-base">
           Duração{'\n'}
-          <Text className="font-regular">{convertTimeToString(bookDetails.duration)}</Text>
+          <Text className="font-light color-zinc-600 dark:color-zinc-300">
+            {convertTimeToString(bookDetails.duration)}
+          </Text>
         </Text>
         <Text className="flex-1 font-semibold text-base">
           Páginas{'\n'}
-          <Text className="font-regular">{bookDetails.pages}</Text>
+          <Text className="font-light color-zinc-600 dark:color-zinc-300">{bookDetails.pages}</Text>
         </Text>
       </View>
       <View className="flex-row">
         <Text className="flex-1 font-semibold text-base">
           Ano de publicação{'\n'}
-          <Text className="font-regular">{bookDetails.publicationYear}</Text>
+          <Text className="font-light color-zinc-600 dark:color-zinc-300">
+            {bookDetails.publicationYear}
+          </Text>
         </Text>
         <Text className="flex-1 font-semibold text-base">
           Gêneros{'\n'}
-          <Text className="font-regular">{bookDetails.genres.join(', ')}</Text>
+          <Text className="font-light color-zinc-600 dark:color-zinc-300">
+            {bookDetails.genres.map(toPascalCase).join(', ')}
+          </Text>
         </Text>
       </View>
       <View>
         <Text className="flex-1 font-semibold text-base">
           Idioma{'\n'}
-          <Text className="font-regular">{bookDetails.language}</Text>
+          <Text className="font-light color-zinc-600 dark:color-zinc-300">
+            {toPascalCase(bookDetails.language)}
+          </Text>
         </Text>
       </View>
     </View>

@@ -2,7 +2,8 @@ import { BookData } from '@/app/(app)/books/[bookId]';
 import { useSession } from '@/hooks/authContext';
 import { router } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
+import { Button } from '../button';
 import ReviewCard from '../reviewCard';
 import { Text } from '../text';
 
@@ -18,16 +19,11 @@ export default function Reviews({ bookDetails }: ReviewsProps) {
   );
 
   return (
-    <View className="items-center pb-44">
+    <View className="items-center pb-48">
       {bookDetails.reviews.length === 0 ? (
-        <Pressable
-          onPress={() => router.navigate(`/books/${bookDetails.id}/reviews/book-review`)}
-          className="w-full rounded-lg border-2 bg-zinc-950 py-4 dark:border-0 dark:bg-zinc-900"
-        >
-          <Text className="text-center font-semibold text-base color-zinc-50">
-            Seja o primeiro a avaliar essa obra
-          </Text>
-        </Pressable>
+        <Button onPress={() => router.navigate(`/books/${bookDetails.id}/reviews/book-review`)}>
+          <Button.Title>Seja o primeiro a avaliar essa obra</Button.Title>
+        </Button>
       ) : (
         <>
           <Text className="font-semibold text-lg">
@@ -52,12 +48,11 @@ export default function Reviews({ bookDetails }: ReviewsProps) {
           </View>
           <View className="mt-4 w-full items-center gap-2">
             {!hasReviewed ? (
-              <Pressable
+              <Button
                 onPress={() => router.navigate(`/books/${bookDetails.id}/reviews/book-review`)}
-                className="w-full rounded-lg border-2 border-zinc-400 py-4 dark:border-0 dark:bg-zinc-900"
               >
-                <Text className="text-center font-semibold text-base">Avalie essa obra</Text>
-              </Pressable>
+                <Button.Title>Avalie essa obra</Button.Title>
+              </Button>
             ) : null}
 
             <View className="w-full flex-1 gap-2">
@@ -105,12 +100,11 @@ export default function Reviews({ bookDetails }: ReviewsProps) {
             </View>
 
             {bookDetails.reviews.length > 1 ? (
-              <Pressable
+              <Button
                 onPress={() => router.navigate(`/books/${bookDetails.id}/reviews/all-reviews`)}
-                className="w-full rounded-lg border-2 border-zinc-400 py-4 dark:border-0 dark:bg-zinc-900"
               >
-                <Text className="text-center font-semibold text-base">Ver todas as avaliações</Text>
-              </Pressable>
+                <Button.Title>Ver todas as avaliações</Button.Title>
+              </Button>
             ) : null}
           </View>
         </>

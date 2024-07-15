@@ -1,3 +1,4 @@
+import { Button } from '@/components/button';
 import { Header } from '@/components/navigation/Header';
 import { Text } from '@/components/text';
 import { reviewsServer } from '@/server/reviews-server';
@@ -48,6 +49,8 @@ export default function Reviews() {
         router.back();
         return;
       }
+    } finally {
+      setIsCreatingReview(false);
     }
   };
 
@@ -172,12 +175,9 @@ export default function Reviews() {
             onChangeText={setContent}
             autoCorrect={false}
           />
-          <Text
-            className="mb-5 rounded-lg border-2 bg-zinc-950 py-4 text-center font-semibold text-base color-zinc-50 dark:border-0 dark:bg-zinc-900"
-            onPress={handleSubmitReview}
-          >
-            Enviar
-          </Text>
+          <Button onPress={handleSubmitReview} isLoading={isCreatingReview}>
+            <Button.Title>Enviar</Button.Title>
+          </Button>
         </View>
       </ScrollView>
     </View>
