@@ -88,7 +88,7 @@ export default function Book() {
   return (
     <>
       <View className="bg-zinc-50 px-5 dark:bg-zinc-950">
-        <Header to={() => router.navigate('/')} />
+        <Header to={() => (router.canGoBack() ? router.back() : router.replace('/'))} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View className="gap-3">
             <Image

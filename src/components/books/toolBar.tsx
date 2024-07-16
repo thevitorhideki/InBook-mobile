@@ -16,7 +16,8 @@ export function ToolBar({ bookId }: { bookId: number }) {
 
   async function fetchInteractions() {
     try {
-      const { interactions } = await interactionsServer.getInteractionsByUserAndBook(bookId);
+      const interactions = await interactionsServer.getInteractionsByUserAndBook(bookId);
+
       if (interactions.length > 0) {
         setIsBookmarked(interactions.includes(InteractionType.SAVED));
         setIsDownloaded(interactions.includes(InteractionType.DOWNLOADED));
@@ -32,7 +33,7 @@ export function ToolBar({ bookId }: { bookId: number }) {
         await interactionsServer.removeInteraction(bookId, InteractionType.SAVED);
         setIsBookmarked(false);
       } else {
-        await interactionsServer.create(bookId, InteractionType.SAVED);
+        await interactionsServer.createInteraction(bookId, InteractionType.SAVED);
         setIsBookmarked(true);
       }
     } catch (error) {
@@ -46,7 +47,7 @@ export function ToolBar({ bookId }: { bookId: number }) {
         await interactionsServer.removeInteraction(bookId, InteractionType.DOWNLOADED);
         setIsDownloaded(false);
       } else {
-        await interactionsServer.create(bookId, InteractionType.DOWNLOADED);
+        await interactionsServer.createInteraction(bookId, InteractionType.DOWNLOADED);
         setIsDownloaded(true);
       }
     } catch (error) {

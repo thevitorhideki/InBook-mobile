@@ -1,6 +1,6 @@
 import { colors } from '@/styles/colors';
 import { router } from 'expo-router';
-import { ChevronLeft, EllipsisVertical } from 'lucide-react-native';
+import { ChevronLeft } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { View } from 'react-native';
 import { ScreenStackHeaderConfigProps } from 'react-native-screens';
@@ -31,11 +31,7 @@ function Header({
 
       <Text className="flex-1 text-center font-semibold text-3xl">{title}</Text>
 
-      <EllipsisVertical
-        className="flex-1"
-        size={34}
-        color={colorScheme === 'light' ? colors.light.text : colors.dark.text}
-      />
+      <View className="h-10 w-10" />
     </View>
   );
 }

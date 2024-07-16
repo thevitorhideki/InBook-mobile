@@ -35,11 +35,12 @@ export function Header() {
     <View className="w-full flex-row items-center justify-between p-5">
       <View>
         <Text className="font-semibold text-3xl">
-          {(pathname === '/' && `Olá, ${userData.firstName ? userData.firstName : ''}`) ||
+          {(pathname !== '/explore' &&
+            pathname !== '/library' &&
+            `Olá, ${userData.firstName ? userData.firstName : ''}`) ||
             (pathname === '/explore' && 'Explorar') ||
-            (pathname === '/library' && 'Biblioteca')}
+            (pathname === '/library' && 'Minha Biblioteca')}
         </Text>
-        {pathname === '/' && <Text>Bem vindo de volta 👋</Text>}
       </View>
       <Pressable
         onPress={() => {

@@ -23,16 +23,12 @@ export function Book({
   pages,
   variation = 'primary',
 }: BookProps) {
-  function handleNavigateToBookDetails() {
-    router.navigate(`/books/${id}`);
-  }
-
   return (
     <>
       {(variation === 'primary' && (
         <TouchableOpacity
           className="mr-5 max-w-48"
-          onPress={handleNavigateToBookDetails}
+          onPress={() => router.replace(`/books/${id}`)}
           activeOpacity={0.5}
         >
           <Image
@@ -48,7 +44,7 @@ export function Book({
         </TouchableOpacity>
       )) ||
         (variation === 'secondary' && (
-          <TouchableOpacity activeOpacity={0.5} onPress={handleNavigateToBookDetails}>
+          <TouchableOpacity activeOpacity={0.5} onPress={() => router.replace(`/books/${id}`)}>
             <View className="w-full flex-row rounded-lg bg-zinc-200 dark:bg-zinc-900">
               <Image
                 source={cover}

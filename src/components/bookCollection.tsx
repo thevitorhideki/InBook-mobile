@@ -10,7 +10,7 @@ type BookCollectionProps = {
 };
 
 export function BookCollection({ title, genre }: BookCollectionProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [books, setBooks] = useState([] as BookCard[]);
 
   async function getBookCardDetails(genre: string) {
