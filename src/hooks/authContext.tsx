@@ -1,8 +1,12 @@
-import { createContext, PropsWithChildren, useContext } from 'react';
+import { authServer } from '@/server/auth-server';
+import { router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
+import { jwtDecode } from 'jwt-decode';
+import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
 import { useStorageState } from './useStorageState';
 
 const AuthContext = createContext<{
-  signIn: (token: string) => void;
+  signIn: (username: string, password: string) => void;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
@@ -29,13 +33,67 @@ export function useSession() {
 export function SessionProvider(props: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
 
+  const isTokenExpired = () => {
+    try {
+      const { exp } = jwtDecode(session);
+      return exp * 1000 < Date.now();
+    } catch (error) {
+      return true;
+    }
+  };
+
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      const storedToken = await SecureStore.getItemAsync('refresh_token');
+      if (storedToken && isTokenExpired()) {
+        try {
+          await SecureStore.deleteItemAsync('refresh_token');
+          setSession(null);
+          router.replace('/sign-in');
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    checkTokenValidity();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(
+      async () => {
+        const storedToken = await SecureStore.getItemAsync('refresh_token');
+        if (storedToken && isTokenExpired()) {
+          try {
+            const tokens = await authServer.refreshToken();
+            await SecureStore.setItemAsync('session', tokens.access_token);
+            setSession(tokens.access_token);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      },
+      1000 * 60 * 15,
+    );
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
-        signIn: (token) => {
-          setSession(token);
+        signIn: async (username, password) => {
+          try {
+            const tokens = await authServer.signIn({ username, password });
+            await SecureStore.setItemAsync('refresh_token', tokens.refresh_token);
+            setSession(tokens.access_token);
+            router.replace('/');
+          } catch (error) {
+            console.error(error);
+          }
         },
-        signOut: () => {
+        signOut: async () => {
+          await SecureStore.deleteItemAsync('refresh_token');
           setSession(null);
         },
         session,

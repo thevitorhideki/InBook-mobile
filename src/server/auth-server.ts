@@ -10,7 +10,7 @@ type SignUpBody = {
   email: string;
 } & SignInBody;
 
-async function signIn(body: SignInBody) {
+async function signIn(body: SignInBody): Promise<{ access_token: string; refresh_token: string }> {
   try {
     const response = await api.post('auth/login', body);
 
