@@ -32,7 +32,6 @@ export function useSession() {
 
 export function SessionProvider(props: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
-
   const isTokenExpired = () => {
     try {
       const { exp } = jwtDecode(session);
@@ -45,7 +44,7 @@ export function SessionProvider(props: PropsWithChildren) {
   useEffect(() => {
     const checkTokenValidity = async () => {
       const storedToken = await SecureStore.getItemAsync('refresh_token');
-      if (storedToken && isTokenExpired()) {
+      if (!storedToken && isTokenExpired()) {
         try {
           await SecureStore.deleteItemAsync('refresh_token');
           setSession(null);
@@ -63,7 +62,7 @@ export function SessionProvider(props: PropsWithChildren) {
     const interval = setInterval(
       async () => {
         const storedToken = await SecureStore.getItemAsync('refresh_token');
-        if (storedToken && isTokenExpired()) {
+        if (storedToken) {
           try {
             const tokens = await authServer.refreshToken();
             await SecureStore.setItemAsync('session', tokens.access_token);
@@ -73,7 +72,7 @@ export function SessionProvider(props: PropsWithChildren) {
           }
         }
       },
-      1000 * 60 * 15,
+      1000 * 60 * 10,
     );
 
     return () => clearInterval(interval);

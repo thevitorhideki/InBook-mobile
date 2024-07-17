@@ -1,4 +1,4 @@
-import { convertTimeToString } from '@/utils/convertTimeToString';
+import { timeToString } from '@/utils/timeToString';
 import { toPascalCase } from '@/utils/toPascalCase';
 import { View } from 'react-native';
 import { Text } from '../text';
@@ -18,7 +18,7 @@ export function Details(bookDetails: BookDetails) {
         <Text className="flex-1 font-semibold text-base">
           Duração{'\n'}
           <Text className="font-light color-zinc-600 dark:color-zinc-300">
-            {convertTimeToString(bookDetails.duration)}
+            {timeToString(bookDetails.duration)}
           </Text>
         </Text>
         <Text className="flex-1 font-semibold text-base">

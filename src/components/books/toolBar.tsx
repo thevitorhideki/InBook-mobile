@@ -3,15 +3,21 @@ import { interactionsServer } from '@/server/interactions-server';
 import { colors } from '@/styles/colors';
 import { Ionicons } from '@expo/vector-icons';
 import clsx from 'clsx';
+import { router } from 'expo-router';
 import { Glasses, Headphones } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Text } from '../text';
 
-export function ToolBar({ bookId }: { bookId: number }) {
+type ToolBarProps = {
+  bookId: number;
+};
+
+export function ToolBar({ bookId }: ToolBarProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
+
   const { colorScheme } = useColorScheme();
 
   async function fetchInteractions() {
@@ -63,8 +69,9 @@ export function ToolBar({ bookId }: { bookId: number }) {
     <View className="absolute bottom-0 left-5 mb-5 w-11/12 flex-row items-center justify-between gap-3 rounded-lg bg-zinc-200 dark:bg-zinc-900">
       <View className="flex-1 flex-row">
         <TouchableOpacity
-          className="m-3 flex-1 flex-row items-center justify-center gap-2 rounded-lg bg-zinc-300 p-3 dark:bg-zinc-800"
+          className="m-2 flex-1 flex-row items-center justify-center gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800"
           activeOpacity={0.5}
+          onPress={() => router.navigate(`/books/${bookId}/players/audiobook`)}
         >
           <Headphones
             size={24}
@@ -73,7 +80,7 @@ export function ToolBar({ bookId }: { bookId: number }) {
           <Text className="text-base font-bold">Escutar</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="my-3 flex-1 flex-row items-center justify-center gap-2 rounded-lg bg-zinc-300 p-3 dark:bg-zinc-800"
+          className="my-2 flex-1 flex-row items-center justify-center gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800"
           activeOpacity={0.5}
         >
           <Glasses size={24} color={colorScheme === 'dark' ? colors.zinc[100] : colors.zinc[950]} />
@@ -82,7 +89,7 @@ export function ToolBar({ bookId }: { bookId: number }) {
       </View>
       <View className="flex-row">
         <TouchableOpacity
-          className={clsx('my-3 flex-row gap-2 rounded-lg bg-zinc-300 p-3 dark:bg-zinc-800', {
+          className={clsx('my-2 flex-row gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800', {
             'bg-orange-500': isDownloaded,
           })}
           activeOpacity={0.5}
@@ -101,7 +108,7 @@ export function ToolBar({ bookId }: { bookId: number }) {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          className={clsx('m-3 flex-row gap-2 rounded-lg bg-zinc-300 p-3 dark:bg-zinc-800', {
+          className={clsx('m-2 flex-row gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800', {
             'bg-orange-500': isBookmarked,
           })}
           activeOpacity={0.5}

@@ -1,4 +1,4 @@
-import { convertTimeToString } from '@/utils/convertTimeToString';
+import { timeToString } from '@/utils/timeToString';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { TouchableOpacity, View } from 'react-native';
@@ -57,7 +57,7 @@ export function Book({
                   <Text className="font-light text-sm">{author}</Text>
                 </View>
                 <View className="flex-row items-center gap-1">
-                  <Text className="font-light text-sm">{convertTimeToString(duration)}</Text>
+                  <Text className="font-light text-sm">{timeToString(duration)}</Text>
                   <Text className="">|</Text>
                   <Text className="font-light text-sm">{pages} páginas</Text>
                 </View>
