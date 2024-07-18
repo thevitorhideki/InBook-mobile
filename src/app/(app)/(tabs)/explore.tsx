@@ -36,7 +36,7 @@ export default function Explore() {
   }, [search]);
 
   return (
-    <View className="flex-1 gap-4 px-5">
+    <View className="flex-1 gap-4">
       <Input variant="tertiary">
         <Search size={20} color={colors.zinc[400]} />
         <Input.Field

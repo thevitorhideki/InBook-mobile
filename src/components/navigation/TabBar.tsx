@@ -35,7 +35,7 @@ export default function TabBar() {
           setSelectedTab(Tab.Home);
           router.navigate('/');
         }}
-        activeOpacity={0.5}
+        activeOpacity={0.8}
       >
         <Ionicons
           name={selectedTab === Tab.Home ? 'home' : 'home-outline'}
@@ -57,7 +57,7 @@ export default function TabBar() {
           setSelectedTab(Tab.Explore);
           router.push('/explore');
         }}
-        activeOpacity={0.5}
+        activeOpacity={0.8}
       >
         <Ionicons
           name={selectedTab === Tab.Explore ? 'search' : 'search-outline'}
@@ -79,7 +79,7 @@ export default function TabBar() {
           setSelectedTab(Tab.Library);
           router.push('/library');
         }}
-        activeOpacity={0.5}
+        activeOpacity={0.8}
       >
         <Ionicons
           name={selectedTab === Tab.Library ? 'bookmarks' : 'bookmarks-outline'}

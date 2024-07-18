@@ -1,43 +1,22 @@
 import { useSession } from '@/hooks/authContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'expo-image';
 import { usePathname } from 'expo-router';
-import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { Text } from './text';
 
-type UserData = {
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string;
-};
-
 export function Header() {
-  const [userData, setUserData] = useState({} as UserData);
   const pathname = usePathname();
-  const { signOut } = useSession();
+  const { signOut, user } = useSession();
 
-  async function fetchUserData() {
-    try {
-      const data = await AsyncStorage.getItem('user');
-
-      setUserData(JSON.parse(data || '{}'));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  if (!user) return null;
 
   return (
-    <View className="w-full flex-row items-center justify-between p-5">
+    <View className="w-full flex-row items-center justify-between py-5">
       <View>
         <Text className="font-semibold text-3xl">
           {(pathname !== '/explore' &&
             pathname !== '/library' &&
-            `Olá, ${userData.firstName ? userData.firstName : ''}`) ||
+            `Olá, ${user.profile?.firstName ? user.profile.firstName : ''}`) ||
             (pathname === '/explore' && 'Explorar') ||
             (pathname === '/library' && 'Minha Biblioteca')}
         </Text>
@@ -49,7 +28,7 @@ export function Header() {
       >
         <Image
           style={{ width: 36, height: 36, borderRadius: 20 }}
-          source={userData.avatarUrl}
+          source={user.profile?.avatarUrl}
           contentFit="cover"
           transition={500}
         />

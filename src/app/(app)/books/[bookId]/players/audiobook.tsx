@@ -66,7 +66,7 @@ export default function AudioBookPlayer() {
 
   return (
     <>
-      <View className="flex-1 px-5">
+      <View className="flex-1">
         <Header />
         <View className="items-center gap-2">
           <Image

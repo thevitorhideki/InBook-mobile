@@ -27,7 +27,7 @@ export default function RootLayout() {
 
   return (
     <SessionProvider>
-      <View className="flex-1 bg-zinc-50 dark:bg-zinc-950" style={{ paddingTop: insets.top }}>
+      <View className="flex-1 bg-zinc-50 px-5 dark:bg-zinc-950" style={{ paddingTop: insets.top }}>
         <StatusBar
           barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
           backgroundColor="transparent"

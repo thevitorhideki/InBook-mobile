@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native';
 
 export default function Index() {
   return (
-    <View className="bg-zinc-50 px-5 dark:bg-zinc-950">
+    <View className="bg-zinc-50 dark:bg-zinc-950">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-4 pb-44">
         <BookCollection title="Histórias que você vai amar" />
         <BookCollection title="Mais obras de Colleen Hover" genre={Genre.ROMANCE} />

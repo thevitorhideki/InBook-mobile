@@ -12,7 +12,7 @@ export enum PlaybackSpeed {
   Fast = 2,
 }
 
-export const PlayerContext = createContext<{
+const PlayerContext = createContext<{
   speed: number;
   isPlaying: boolean;
   isLoadingAudio: boolean;

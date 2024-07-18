@@ -55,7 +55,7 @@ export default function Reviews() {
   };
 
   return (
-    <View className="mb-20 px-5">
+    <View className="mb-20">
       <Header title="Avaliação" />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* <Image

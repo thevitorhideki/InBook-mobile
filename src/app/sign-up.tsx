@@ -1,8 +1,6 @@
 import { Text } from '@/components/text';
 import { useSession } from '@/hooks/authContext';
-import { authServer } from '@/server/auth-server';
 import { router } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
 import { useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
 
@@ -10,19 +8,7 @@ export default function SingUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useSession();
-
-  async function handleSignUp() {
-    try {
-      const tokens = await authServer.signUp({ username, email, password });
-      await SecureStore.setItemAsync('refresh_token', tokens.refresh);
-      signIn(tokens.access_token);
-      router.replace('/');
-    } catch (error) {
-      console.error(error);
-    } finally {
-    }
-  }
+  const { signUp } = useSession();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -41,7 +27,7 @@ export default function SingUp() {
         onChangeText={setPassword}
         className="rounded-lg placeholder:color-zinc-400 dark:color-zinc-300 dark:placeholder:color-zinc-500"
       />
-      <Button onPress={handleSignUp} title="Sign Up" />
+      <Button onPress={() => signUp(username, email, password)} title="Sign Up" />
       <Text>
         Já possui uma conta?{' '}
         <Text

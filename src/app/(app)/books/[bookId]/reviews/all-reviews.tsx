@@ -70,7 +70,7 @@ export default function Reviews() {
   );
 
   return (
-    <View className="px-5">
+    <View className="">
       <Header title="Avaliações" to={() => router.navigate(`/books/${bookId}`)} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="items-center gap-3">

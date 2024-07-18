@@ -7,7 +7,7 @@ import { Button, TextInput, View } from 'react-native';
 export default function SingIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useSession();
+  const { signIn, fetchUserData } = useSession();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -28,6 +28,7 @@ export default function SingIn() {
           className="font-semibold"
           onPress={() => {
             router.replace('/sign-up');
+            fetchUserData();
           }}
         >
           Crie agora!

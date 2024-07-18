@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import { api } from './api';
 
@@ -11,6 +10,12 @@ export type UserData = {
     lastName?: string;
     avatarUrl?: string;
   };
+};
+
+export type ProfileData = {
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
 };
 
 async function getUserData(): Promise<UserData> {
@@ -29,8 +34,6 @@ async function getUserData(): Promise<UserData> {
       },
     });
 
-    await AsyncStorage.setItem('user', JSON.stringify(response.data.profile));
-
     return response.data;
   } catch (error) {
     if (error.response.status === 401) {
@@ -40,4 +43,24 @@ async function getUserData(): Promise<UserData> {
   }
 }
 
-export const userServer = { getUserData };
+async function createProfile(body: ProfileData) {
+  let token = '';
+
+  try {
+    token = await SecureStore.getItemAsync('session');
+  } catch (error) {
+    throw new Error(error);
+  }
+
+  try {
+    await api.post('account/profile', body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export const userServer = { getUserData, createProfile };

@@ -66,11 +66,11 @@ export function ToolBar({ bookId }: ToolBarProps) {
   }, []);
 
   return (
-    <View className="absolute bottom-0 left-5 mb-5 w-11/12 flex-row items-center justify-between gap-3 rounded-lg bg-zinc-200 dark:bg-zinc-900">
+    <View className="absolute bottom-0 left-0 mb-5 w-full flex-row items-center justify-between gap-3 rounded-lg bg-zinc-200 dark:bg-zinc-900">
       <View className="flex-1 flex-row">
         <TouchableOpacity
           className="m-2 flex-1 flex-row items-center justify-center gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800"
-          activeOpacity={0.5}
+          activeOpacity={0.8}
           onPress={() => router.navigate(`/books/${bookId}/players/audiobook`)}
         >
           <Headphones
@@ -81,7 +81,7 @@ export function ToolBar({ bookId }: ToolBarProps) {
         </TouchableOpacity>
         <TouchableOpacity
           className="my-2 flex-1 flex-row items-center justify-center gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800"
-          activeOpacity={0.5}
+          activeOpacity={0.8}
         >
           <Glasses size={24} color={colorScheme === 'dark' ? colors.zinc[100] : colors.zinc[950]} />
           <Text className="text-base font-bold">Ler</Text>
@@ -92,7 +92,7 @@ export function ToolBar({ bookId }: ToolBarProps) {
           className={clsx('my-2 flex-row gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800', {
             'bg-orange-500': isDownloaded,
           })}
-          activeOpacity={0.5}
+          activeOpacity={0.8}
           onPress={handleDownload}
         >
           <Ionicons
@@ -111,7 +111,7 @@ export function ToolBar({ bookId }: ToolBarProps) {
           className={clsx('m-2 flex-row gap-2 rounded-md bg-zinc-300 p-3 dark:bg-zinc-800', {
             'bg-orange-500': isBookmarked,
           })}
-          activeOpacity={0.5}
+          activeOpacity={0.8}
           onPress={handleBookmark}
         >
           <Ionicons

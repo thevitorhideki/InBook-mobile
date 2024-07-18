@@ -33,7 +33,7 @@ export default function Library() {
   }
 
   return (
-    <View className="flex-1 px-5">
+    <View className="flex-1">
       <View className="flex-row items-end pb-5">
         <Text
           className={clsx('flex-1 border-b-2 py-2 text-center font-semibold text-base', {

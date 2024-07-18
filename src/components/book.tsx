@@ -29,7 +29,7 @@ export function Book({
         <TouchableOpacity
           className="mr-5 max-w-48"
           onPress={() => router.replace(`/books/${id}`)}
-          activeOpacity={0.5}
+          activeOpacity={0.8}
         >
           <Image
             source={cover}
@@ -44,7 +44,7 @@ export function Book({
         </TouchableOpacity>
       )) ||
         (variation === 'secondary' && (
-          <TouchableOpacity activeOpacity={0.5} onPress={() => router.replace(`/books/${id}`)}>
+          <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace(`/books/${id}`)}>
             <View className="w-full flex-row rounded-lg bg-zinc-200 dark:bg-zinc-900">
               <Image
                 source={cover}
