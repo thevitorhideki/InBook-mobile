@@ -1,4 +1,3 @@
-import * as SecureStore from 'expo-secure-store';
 import { api } from './api';
 
 type SignInBody = {
@@ -30,27 +29,11 @@ async function signUp(body: SignUpBody) {
   }
 }
 
-async function refreshToken() {
-  let refresh_token = '';
-  let session = '';
-
+async function refreshToken(
+  refresh_token: string,
+): Promise<{ access_token: string; refresh_token: string }> {
   try {
-    session = await SecureStore.getItemAsync('session');
-    refresh_token = await SecureStore.getItemAsync('refresh_token');
-  } catch (error) {
-    throw new Error(error);
-  }
-
-  try {
-    const response = await api.post(
-      'auth/refresh',
-      { refresh_token },
-      {
-        headers: {
-          Authorization: `Bearer ${session}`,
-        },
-      },
-    );
+    const response = await api.post('auth/refresh', { refresh_token });
 
     return response.data;
   } catch (error) {
