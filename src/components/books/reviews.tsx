@@ -79,7 +79,7 @@ export default function Reviews({ bookDetails }: ReviewsProps) {
               {bookDetails.reviews.filter((review) => review.user.id !== userId).length !== 0 ? (
                 <Text className="text-left font-semibold">Avaliações de outros leitores</Text>
               ) : null}
-              {bookDetails.reviews.slice(0, 10).map((review) => {
+              {bookDetails.reviews.slice(0, 7).map((review) => {
                 if (review.user.id === userId) {
                   return null;
                 }
@@ -99,7 +99,7 @@ export default function Reviews({ bookDetails }: ReviewsProps) {
               })}
             </View>
 
-            {bookDetails.reviews.length > 1 ? (
+            {bookDetails.reviews.length > 7 ? (
               <Button
                 onPress={() => router.navigate(`/books/${bookDetails.id}/reviews/all-reviews`)}
               >

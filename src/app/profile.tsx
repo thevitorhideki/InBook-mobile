@@ -1,4 +1,6 @@
 import { Button } from '@/components/button';
+import { Input } from '@/components/input';
+import { Text } from '@/components/text';
 import { useSession } from '@/hooks/authContext';
 import { userServer } from '@/server/user-server';
 import { Image } from 'expo-image';
@@ -8,7 +10,7 @@ import { router } from 'expo-router';
 import { getApps, initializeApp } from 'firebase/app';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { useState } from 'react';
-import { ActivityIndicator, TextInput, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 if (!getApps().length) {
   initializeApp({
@@ -88,36 +90,43 @@ export default function Profile() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {image ? (
-        <Image source={{ uri: image }} style={{ width: 96, height: 96, borderRadius: 96 }} />
-      ) : isLoadingPhoto ? (
-        <View className="h-24 w-24 items-center justify-center rounded-full bg-zinc-300">
-          <ActivityIndicator size="large" />
-        </View>
-      ) : (
-        <Image
-          source={require('@/assets/user.jpg')}
-          style={{ width: 96, height: 96, borderRadius: 96 }}
-        />
-      )}
-      <Button onPress={picker} className="w-1/2">
-        <Button.Title>Escolher imagem</Button.Title>
-      </Button>
-      <TextInput
-        placeholder="Primeiro nome"
-        onChangeText={setFirstName}
-        className="rounded-lg placeholder:color-zinc-400 dark:color-zinc-300 dark:placeholder:color-zinc-500"
-      />
-      <TextInput
-        placeholder="Sobrenome"
-        onChangeText={setLastName}
-        className="rounded-lg placeholder:color-zinc-400 dark:color-zinc-300 dark:placeholder:color-zinc-500"
-      />
+    <View className="flex-1 justify-center gap-6">
+      <View>
+        <Text className="font-semibold text-3xl">Crie o seu Perfil</Text>
+        <Text className="text-base">
+          Para começar, precisamos de algumas informações para criar seu perfil. Você pode alterar
+          isso a qualquer momento.
+        </Text>
+      </View>
+      <View className="items-center gap-3">
+        {image ? (
+          <Image source={{ uri: image }} style={{ width: 96, height: 96, borderRadius: 96 }} />
+        ) : isLoadingPhoto ? (
+          <View className="h-24 w-24 items-center justify-center rounded-full bg-zinc-300">
+            <ActivityIndicator size="large" />
+          </View>
+        ) : (
+          <Image
+            source={require('@/assets/user.jpg')}
+            style={{ width: 96, height: 96, borderRadius: 96 }}
+          />
+        )}
+        <Button onPress={picker} className="w-52">
+          <Button.Title>Escolher imagem</Button.Title>
+        </Button>
 
-      <Button onPress={handleCreateProfile} isLoading={isLoading} className="w-1/2">
-        <Button.Title>Criar perfil</Button.Title>
-      </Button>
+        <Input variant="secondary">
+          <Input.Field placeholder="Primeiro nome" onChangeText={setFirstName} />
+        </Input>
+
+        <Input variant="secondary">
+          <Input.Field placeholder="Sobrenome" onChangeText={setLastName} />
+        </Input>
+
+        <Button onPress={handleCreateProfile} isLoading={isLoading} className="w-1/2">
+          <Button.Title>Criar perfil</Button.Title>
+        </Button>
+      </View>
     </View>
   );
 }

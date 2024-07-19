@@ -7,7 +7,7 @@ import { Text } from './text';
 
 interface IReviewCardProps {
   username: string;
-  avatarUrl: string;
+  avatarUrl?: string;
   title?: string;
   content?: string;
   enjoyedContent: boolean;
@@ -23,7 +23,10 @@ export default function ReviewCard(props: IReviewCardProps) {
   return (
     <View className="w-full gap-2 rounded-lg border-2 border-gray-400 p-4 dark:border-0 dark:bg-zinc-900">
       <View className="flex flex-row items-center gap-2">
-        <Image source={avatarUrl} style={{ width: 32, height: 32, borderRadius: 20 }} />
+        <Image
+          source={avatarUrl ? avatarUrl : require('@/assets/user.jpg')}
+          style={{ width: 32, height: 32, borderRadius: 20 }}
+        />
         <Text className="font-semibold text-base">{username}</Text>
       </View>
       {title ? (

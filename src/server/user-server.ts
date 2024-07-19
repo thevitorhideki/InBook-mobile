@@ -15,7 +15,7 @@ export type UserData = {
 export type ProfileData = {
   firstName: string;
   lastName: string;
-  avatarUrl: string;
+  avatarUrl?: string;
 };
 
 async function getUserData(): Promise<UserData> {

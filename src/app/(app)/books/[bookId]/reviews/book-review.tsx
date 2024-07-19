@@ -32,10 +32,6 @@ export default function Reviews() {
         recommended,
         title,
         content,
-        user: {
-          username: 'username',
-          avatarUrl: 'avatarUrl',
-        },
       });
 
       Alert.alert('Avaliação enviada!', 'Obrigado por avaliar a obra!');
@@ -49,6 +45,7 @@ export default function Reviews() {
         router.back();
         return;
       }
+      console.error(error);
     } finally {
       setIsCreatingReview(false);
     }

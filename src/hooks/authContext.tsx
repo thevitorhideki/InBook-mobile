@@ -57,6 +57,7 @@ export function SessionProvider(props: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
   const [user, setUser] = useState<UserData | null>(null);
   const [isLoadingUserData, setIsLoadingUserData] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -72,19 +73,37 @@ export function SessionProvider(props: PropsWithChildren) {
     } finally {
       setIsLoadingUserData(false);
     }
-  }, [setSession]);
+  }, [setIsLoadingUserData, setUser, setSession]);
 
   const fetchUserDataStorage = useCallback(async () => {
     try {
+      setIsLoadingUserData(true);
       const user = await AsyncStorage.getItem('user');
 
       if (user) {
         setUser(JSON.parse(user));
+      } else {
+        fetchUserData();
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoadingUserData(false);
     }
-  }, []);
+  }, [setIsLoadingUserData, setUser, fetchUserData]);
+
+  const refreshTokens = useCallback(async () => {
+    const storedToken = await SecureStore.getItemAsync('refresh_token');
+    if (storedToken) {
+      try {
+        const tokens = await authServer.refreshToken(storedToken);
+        await SecureStore.setItemAsync('refresh_token', tokens.refresh_token);
+        setSession(tokens.access_token);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [setSession]);
 
   const isTokenExpired = useCallback((token: string) => {
     try {
@@ -107,7 +126,7 @@ export function SessionProvider(props: PropsWithChildren) {
         console.error(error);
       }
     },
-    [fetchUserData, setSession],
+    [setSession, fetchUserData],
   );
 
   const signUp = useCallback(
@@ -126,51 +145,26 @@ export function SessionProvider(props: PropsWithChildren) {
 
   const signOut = useCallback(async () => {
     await SecureStore.deleteItemAsync('refresh_token');
+    await AsyncStorage.removeItem('user');
     setSession(null);
     setUser(null);
-  }, [setSession]);
+  }, [setSession, setUser]);
 
   useEffect(() => {
-    // Check if the access token is expired, if so, refresh it
-    const refreshAccessToken = async () => {
-      const storedToken = await SecureStore.getItemAsync('refresh_token');
-      try {
-        const tokens = await authServer.refreshToken(storedToken);
-        await SecureStore.setItemAsync('refresh_token', tokens.refresh_token);
-        setSession(tokens.access_token);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (session && isTokenExpired(session)) {
-      refreshAccessToken();
-    }
-    if (session) {
+    if (isInitialLoad && session) {
       fetchUserDataStorage();
+      if (isTokenExpired(session)) {
+        refreshTokens();
+      }
+      setIsInitialLoad(false);
     }
-  }, [session]);
+  }, [session, isTokenExpired, refreshTokens, fetchUserDataStorage, isInitialLoad]);
 
   useEffect(() => {
     // Refresh the token every 10 minutes
-    const interval = setInterval(
-      async () => {
-        const storedToken = await SecureStore.getItemAsync('refresh_token');
-        if (storedToken) {
-          try {
-            const tokens = await authServer.refreshToken(storedToken);
-            await SecureStore.setItemAsync('refresh_token', tokens.refresh_token);
-            setSession(tokens.access_token);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      },
-      1000 * 60 * 10,
-    );
-
+    const interval = setInterval(refreshTokens, 1000 * 60 * 10);
     return () => clearInterval(interval);
-  }, [setSession]);
+  }, [refreshTokens]);
 
   const contextValue = useMemo(
     () => ({

@@ -12,7 +12,9 @@ export function Header() {
     <View className="w-full flex-row items-center justify-between py-5">
       <View>
         <Text className="font-semibold text-3xl">
-          {(pathname !== '/explore' && pathname !== '/library' && `Olá, ${user?.firstName}`) ||
+          {(pathname !== '/explore' &&
+            pathname !== '/library' &&
+            `Olá, ${user?.firstName ? user.firstName : 'que bom te ver'}`) ||
             (pathname === '/explore' && 'Explorar') ||
             (pathname === '/library' && 'Minha Biblioteca')}
         </Text>
@@ -24,7 +26,7 @@ export function Header() {
       >
         <Image
           style={{ width: 36, height: 36, borderRadius: 20 }}
-          source={user?.avatarUrl}
+          source={user?.avatarUrl ? user.avatarUrl : require('@/assets/user.jpg')}
           contentFit="cover"
           transition={500}
         />

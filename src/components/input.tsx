@@ -16,7 +16,7 @@ function Input({ children, variant = 'primary', className, ...rest }: InputProps
       className={clsx(
         'h-16 max-h-16 min-h-16 flex-row items-center gap-2',
         {
-          'h-14 rounded-lg border-2 border-gray-400 px-4 dark:border-zinc-800':
+          'h-14 rounded-lg border-2 border-gray-600 px-4 dark:border-zinc-800':
             variant !== 'primary',
           'dark:bg-zinc-950': variant === 'secondary',
           'dark:bg-zinc-900': variant === 'tertiary',

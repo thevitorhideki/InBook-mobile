@@ -21,10 +21,6 @@ export type CreateReview = {
   recommended: boolean;
   title: string;
   content: string;
-  user: {
-    username: string;
-    avatarUrl: string;
-  };
 };
 
 async function createReview(bookId: string, review: CreateReview) {
