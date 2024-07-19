@@ -13,7 +13,15 @@ import { ActivityIndicator, View } from 'react-native';
 export default function AudioBookPlayer() {
   const [bookDetails, setBookDetails] = useState({} as BookDetails);
   const [isLoadingBookDetails, setIsLoadingBookDetails] = useState(true);
-  const { playbackStatus, sound, positionMs, setPositionMs, setAudioBookUrl } = usePlayer();
+  const {
+    playbackStatus,
+    sound,
+    positionMs,
+    setPositionMs,
+    setAudioBookUrl,
+    playAudio,
+    isPlaying,
+  } = usePlayer();
   const { bookId } = useLocalSearchParams<{ bookId: string }>();
 
   const handleSliderValueChange = async (value) => {
@@ -54,6 +62,9 @@ export default function AudioBookPlayer() {
         console.error(error);
       } finally {
         setIsLoadingBookDetails(false);
+        if (!isPlaying) {
+          playAudio();
+        }
       }
     };
 
