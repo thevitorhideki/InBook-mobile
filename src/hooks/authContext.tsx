@@ -22,21 +22,19 @@ type UserData = {
 };
 
 const AuthContext = createContext<{
-  signIn: (username: string, password: string) => void;
-  signUp: (username: string, email: string, password: string) => void;
   signOut: () => void;
   fetchUserData: () => void;
   user?: UserData | null;
   session?: string | null;
+  setSession: (value: string) => void;
   isLoading: boolean;
   isLoadingUserData: boolean;
 }>({
-  signIn: () => null,
-  signUp: () => null,
   signOut: () => null,
   fetchUserData: () => null,
   user: null,
   session: null,
+  setSession: () => null,
   isLoading: false,
   isLoadingUserData: false,
 });
@@ -55,9 +53,9 @@ export function useSession() {
 
 export function SessionProvider(props: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [user, setUser] = useState<UserData | null>(null);
   const [isLoadingUserData, setIsLoadingUserData] = useState(false);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -115,35 +113,6 @@ export function SessionProvider(props: PropsWithChildren) {
     }
   }, []);
 
-  const signIn = useCallback(
-    async (username: string, password: string) => {
-      try {
-        const tokens = await authServer.signIn({ username, password });
-        await SecureStore.setItemAsync('refresh_token', tokens.refresh_token);
-        setSession(tokens.access_token);
-        fetchUserData();
-        router.replace('/');
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [setSession, fetchUserData],
-  );
-
-  const signUp = useCallback(
-    async (username: string, email: string, password: string) => {
-      try {
-        const tokens = await authServer.signUp({ username, email, password });
-        await SecureStore.setItemAsync('refresh_token', tokens.refresh_token);
-        setSession(tokens.access_token);
-        router.replace('/profile');
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [setSession],
-  );
-
   const signOut = useCallback(async () => {
     await SecureStore.deleteItemAsync('refresh_token');
     await AsyncStorage.removeItem('user');
@@ -169,16 +138,15 @@ export function SessionProvider(props: PropsWithChildren) {
 
   const contextValue = useMemo(
     () => ({
-      signIn,
-      signUp,
       signOut,
       fetchUserData,
       user,
       session,
+      setSession,
       isLoading,
       isLoadingUserData,
     }),
-    [signIn, signUp, signOut, fetchUserData, user, session, isLoading, isLoadingUserData],
+    [signOut, fetchUserData, user, session, setSession, isLoading, isLoadingUserData],
   );
 
   return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;

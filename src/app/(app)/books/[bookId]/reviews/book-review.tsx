@@ -21,6 +21,14 @@ export default function Reviews() {
     try {
       setIsCreatingReview(true);
 
+      if (!enjoyedContent || !enjoyedNarration || !recommended) {
+        Alert.alert(
+          'Dados inválidos',
+          `Por favor, preencha o campo de ${!enjoyedContent ? 'conteúdo' : !enjoyedNarration ? 'narração' : 'recomendação geral'}`,
+        );
+        return;
+      }
+
       if (title && !content) {
         Alert.alert('Dados inválidos', 'Por favor, escreva sobre sua experiência');
         return;
@@ -37,15 +45,11 @@ export default function Reviews() {
       Alert.alert('Avaliação enviada!', 'Obrigado por avaliar a obra!');
       router.navigate(`books/${bookId}/reviews/all-reviews`);
     } catch (error) {
-      if (error.message === 'Dados inválidos') {
-        Alert.alert('Dados inválidos', 'Por favor, preencha todos os campos');
-        return;
-      } else if (error.message === 'Você já avaliou este livro') {
+      if (error.message === 'Você já avaliou este livro') {
         Alert.alert('Avaliação duplicada', 'Você já avaliou este livro');
         router.back();
         return;
       }
-      console.error(error);
     } finally {
       setIsCreatingReview(false);
     }

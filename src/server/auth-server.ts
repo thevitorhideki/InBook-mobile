@@ -15,7 +15,7 @@ async function signIn(body: SignInBody): Promise<{ access_token: string; refresh
 
     return response.data;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 }
 
@@ -25,7 +25,12 @@ async function signUp(body: SignUpBody) {
 
     return response.data;
   } catch (error) {
-    throw new Error(error);
+    if (error.response.data.message === 'Username already exists') {
+      throw new Error('Username already exists');
+    } else if (error.response.data.message === 'Email already exists') {
+      throw new Error('Email already exists');
+    }
+    throw error;
   }
 }
 
@@ -37,7 +42,7 @@ async function refreshToken(
 
     return response.data;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.response.data.message);
   }
 }
 

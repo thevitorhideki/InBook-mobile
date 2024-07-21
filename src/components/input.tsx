@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { useColorScheme } from 'nativewind';
 import { Platform, TextInput, TextInputProps, View, ViewProps } from 'react-native';
 
-type Variants = 'primary' | 'secondary' | 'tertiary';
+type Variants = 'primary' | 'secondary';
 
 type InputProps = {
   children: React.ReactNode;
@@ -19,7 +19,6 @@ function Input({ children, variant = 'primary', className, ...rest }: InputProps
           'h-14 rounded-lg border-2 border-gray-600 px-4 dark:border-zinc-800':
             variant !== 'primary',
           'dark:bg-zinc-950': variant === 'secondary',
-          'dark:bg-zinc-900': variant === 'tertiary',
         },
         className,
       )}

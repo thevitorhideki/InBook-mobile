@@ -10,7 +10,7 @@ import { router } from 'expo-router';
 import { getApps, initializeApp } from 'firebase/app';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Alert, View } from 'react-native';
 
 if (!getApps().length) {
   initializeApp({
@@ -77,6 +77,11 @@ export default function Profile() {
   }
 
   const handleCreateProfile = async () => {
+    if (!firstName || !lastName) {
+      Alert.alert('Cadastro', 'Preencha todos os campos para criar o perfil');
+      return;
+    }
+
     try {
       setIsLoading(true);
       await userServer.createProfile({ firstName, lastName, avatarUrl: image });
