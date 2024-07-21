@@ -63,6 +63,7 @@ export function SessionProvider(props: PropsWithChildren) {
     try {
       setIsLoadingUserData(true);
       const user = await userServer.getUserData();
+
       setUser({ ...user.profile });
       await AsyncStorage.setItem('user', JSON.stringify(user.profile));
 
@@ -80,7 +81,7 @@ export function SessionProvider(props: PropsWithChildren) {
       setIsLoadingUserData(true);
       const user = await AsyncStorage.getItem('user');
 
-      if (user) {
+      if (JSON.parse(user)?.firstName) {
         setUser(JSON.parse(user));
       } else {
         fetchUserData();
