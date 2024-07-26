@@ -18,7 +18,7 @@ export default function Author({ bookDetails }: { bookDetails: BookDetails }) {
           transition={500}
         />
         <View style={{ flex: 1 }}>
-          <Text className="font-semibold text-sm">{author.name}</Text>
+          <Text className="font-semibold text-lg">{author.name}</Text>
           <Text className="text-justify text-base">{author.about}</Text>
         </View>
       </View>
